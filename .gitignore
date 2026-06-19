@@ -1,0 +1,27 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.env/
+.env.*
+
+# Streamlit local config and cache
+.streamlit/
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data and credentials
+credentials.json
+*.sqlite3
+*.db
+
+# OS files
+.DS_Store
+Thumbs.db
