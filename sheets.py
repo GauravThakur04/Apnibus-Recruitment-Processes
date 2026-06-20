@@ -10,7 +10,7 @@ from helpers import normalize_text, answer_key
 
 @st.cache_resource(show_spinner=False)
 def get_workbook():
-
+    st.write(service_account_info["private_key"][:50])
     service_account_info = None
 
     try:
