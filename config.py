@@ -26,11 +26,28 @@ SCOPE = [
 REQUIRED_COLUMNS = {
     "Q_ID",
     "Section",
+    "Type",
+
     "Question_EN",
-    "Option_A",
-    "Option_B",
-    "Option_C",
-    "Option_D",
+    "Question_HI",
+    "Question_PA",
+
+    "Option_A_EN",
+    "Option_A_HI",
+    "Option_A_PA",
+
+    "Option_B_EN",
+    "Option_B_HI",
+    "Option_B_PA",
+
+    "Option_C_EN",
+    "Option_C_HI",
+    "Option_C_PA",
+
+    "Option_D_EN",
+    "Option_D_HI",
+    "Option_D_PA",
+
     "Correct",
     "Points",
 }
@@ -41,22 +58,19 @@ LANGUAGES = {
         "code": "EN",
         "label": "English",
         "question_col": "Question_EN",
-        "option_suffix": "",
-        "dir": "ltr",
+        "option_suffix": "_EN",
     },
     "हिंदी": {
         "code": "HI",
-        "label": "हिंदी (Hindi)",
+        "label": "हिंदी",
         "question_col": "Question_HI",
         "option_suffix": "_HI",
-        "dir": "ltr",
     },
     "ਪੰਜਾਬੀ": {
         "code": "PA",
-        "label": "ਪੰਜਾਬੀ (Punjabi)",
+        "label": "ਪੰਜਾਬੀ",
         "question_col": "Question_PA",
         "option_suffix": "_PA",
-        "dir": "ltr",
     },
 }
 

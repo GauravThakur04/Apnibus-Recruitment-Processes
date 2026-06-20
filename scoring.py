@@ -23,14 +23,13 @@ def score_assessment(test_questions: pd.DataFrame) -> tuple[int, int, float, str
         is_correct = False
 
         for answer_code in correct_answers:
-            option_en = normalize_text(question.get(f"Option_{answer_code}", ""))
-            option_local = normalize_text(question.get(f"Option_{answer_code}{suffix}", ""))
-            if normalize_text(selected) in [option_en, option_local]:
-                is_correct = True
-                break
+            option_local = normalize_text(
+        question.get(f"Option_{answer_code}{suffix}", "")
+    )
 
-        if is_correct:
-            score += points
+    if normalize_text(selected) == option_local:
+        is_correct = True
+       
 
     percentage = round((score / max_score) * 100, 2) if max_score else 0.0
     if percentage >= PASS_TO_INTERVIEW:
