@@ -193,31 +193,42 @@ def load_styles() -> None:
 
             /* Select/Dropdown styling */
             [data-baseweb="select"] {
-                color: #FFFFFF !important;
+                color: #121212 !important;
             }
             [data-baseweb="select"] > div {
                 background-color: #FFFFFF !important;
                 border: 2px solid #1E5BA8 !important;
+                border-radius: 6px !important;
             }
             [data-baseweb="select"] span {
                 color: #121212 !important;
                 font-weight: 600 !important;
+                font-size: 0.95rem !important;
             }
             [data-baseweb="popover"] {
                 background-color: #FFFFFF !important;
             }
             [data-baseweb="menu"] {
                 background-color: #FFFFFF !important;
+                border: 1px solid #D1D5DB !important;
+                border-radius: 6px !important;
             }
             [data-baseweb="menu"] li {
                 background-color: #FFFFFF !important;
+                color: #121212 !important;
             }
             [data-baseweb="menu"] li[aria-selected="true"] {
                 background-color: #E3F2FD !important;
+                color: #1E5BA8 !important;
+                font-weight: 700 !important;
+            }
+            [data-baseweb="menu"] li:hover {
+                background-color: #F5F5F5 !important;
             }
             [data-baseweb="menu"] li span {
                 color: #121212 !important;
                 font-weight: 500 !important;
+                font-size: 0.95rem !important;
             }
 
             /* Misc */
