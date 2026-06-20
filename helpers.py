@@ -37,7 +37,7 @@ def choose_questions(questions: pd.DataFrame) -> pd.DataFrame:
     selected_sections = []
     for _, grp in questions.groupby("Section", sort=False):
         sample_size = min(QUESTIONS_PER_SECTION, len(grp))
-        selected_sections.append(grp.sample(n=sample_size, random_state=1))
+        selected_sections.append(grp.sample(n=sample_size))
     return pd.concat(selected_sections).reset_index(drop=True)
 
 
