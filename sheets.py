@@ -20,8 +20,7 @@ def get_workbook():
 
     if service_account_info:
 
-        st.write("Secret Found")
-        st.write(service_account_info.keys())
+       
 
         creds = Credentials.from_service_account_info(
             dict(service_account_info),
