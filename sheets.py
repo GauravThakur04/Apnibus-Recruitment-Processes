@@ -21,19 +21,24 @@ def get_workbook():
     if service_account_info:
         creds = Credentials.from_service_account_info(
             dict(service_account_info),
-            scopes=SCOPE
+            scopes=SCOPE,
         )
-
     else:
-
-        st.error(
-            "Google credentials not found in Streamlit Secrets."
-        )
-        st.stop()
+        # Fallback to a local credentials.json file for local development
+        credentials_path = Path("credentials.json")
+        if credentials_path.exists():
+            creds = Credentials.from_service_account_file(
+                str(credentials_path),
+                scopes=SCOPE,
+            )
+        else:
+            st.error("Google credentials not found in Streamlit Secrets or credentials.json file.")
+            st.stop()
 
     client = gspread.authorize(creds)
 
-    return client.open_by_key(SPREADSHEET_ID)
+    # Open by human-readable workbook name from config
+    return client.open(WORKBOOK_NAME)
 
 @st.cache_data(show_spinner=False)
 def load_questions() -> pd.DataFrame:
