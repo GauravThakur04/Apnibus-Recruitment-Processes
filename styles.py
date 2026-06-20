@@ -85,17 +85,17 @@ def load_styles() -> None:
                 border: 1px solid transparent !important;
             }
             .stButton > button[kind="primary"] {
-                background: #2D3A4C !important;
+                background: #1E5BA8 !important;
                 color: #FFFFFF !important;
-                box-shadow: none !important;
+                box-shadow: 0 2px 8px rgba(30, 91, 168, 0.2) !important;
             }
             .stButton > button[kind="primary"]:hover {
-                background: #1C2533 !important;
+                background: #154285 !important;
             }
             .stButton > button:not([kind="primary"]) {
                 background: #FFFFFF !important;
-                color: #2D3A4C !important;
-                border: 1px solid #D1D5DB !important;
+                color: #1E5BA8 !important;
+                border: 2px solid #1E5BA8 !important;
             }
 
             /* Question layout (paper-like, simple) */
@@ -189,6 +189,35 @@ def load_styles() -> None:
                 color: #556776 !important;
                 font-size: 0.82rem;
                 margin-top: 2px;
+            }
+
+            /* Select/Dropdown styling */
+            [data-baseweb="select"] {
+                color: #FFFFFF !important;
+            }
+            [data-baseweb="select"] > div {
+                background-color: #FFFFFF !important;
+                border: 2px solid #1E5BA8 !important;
+            }
+            [data-baseweb="select"] span {
+                color: #121212 !important;
+                font-weight: 600 !important;
+            }
+            [data-baseweb="popover"] {
+                background-color: #FFFFFF !important;
+            }
+            [data-baseweb="menu"] {
+                background-color: #FFFFFF !important;
+            }
+            [data-baseweb="menu"] li {
+                background-color: #FFFFFF !important;
+            }
+            [data-baseweb="menu"] li[aria-selected="true"] {
+                background-color: #E3F2FD !important;
+            }
+            [data-baseweb="menu"] li span {
+                color: #121212 !important;
+                font-weight: 500 !important;
             }
 
             /* Misc */
