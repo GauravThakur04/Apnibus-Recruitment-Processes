@@ -6,7 +6,7 @@ import streamlit as st
 from google.oauth2.service_account import Credentials
 
 from config import *
-from helpers import normalize_text, answer_key
+from helpers import normalize_text, answer_key, get_lang_config
 
 @st.cache_resource(show_spinner=False)
 def get_workbook():
