@@ -38,7 +38,32 @@ def get_workbook():
 @st.cache_data(show_spinner=False)
 def load_questions() -> pd.DataFrame:
     workbook = get_workbook()
-    sheet = workbook.worksheet(QUESTIONS_SHEET)
+
+    # locate the questions worksheet (case-insensitive). If the configured
+    # worksheet name is not present, look for common alternates such as
+    # 'questionsold' so the app works when the old sheet was renamed.
+    sheet = None
+    target_name = QUESTIONS_SHEET.strip().lower()
+    for ws in workbook.worksheets():
+        if ws.title.strip().lower() == target_name:
+            sheet = ws
+            break
+
+    if sheet is None:
+        alternates = {"questionsold", "questions_old", "questions old", "questions-old"}
+        for ws in workbook.worksheets():
+            if ws.title.strip().lower() in alternates:
+                sheet = ws
+                break
+
+    if sheet is None:
+        available = ", ".join([f"'{w.title}'" for w in workbook.worksheets()])
+        st.error(
+            f"Questions sheet '{QUESTIONS_SHEET}' not found. Available sheets: {available}.\n"
+            "Rename your sheet to match the configured name or update the QUESTIONS_SHEET constant."
+        )
+        st.stop()
+
     data = pd.DataFrame(sheet.get_all_records())
 
     missing_columns = REQUIRED_COLUMNS.difference(data.columns)
