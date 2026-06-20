@@ -33,9 +33,9 @@ def get_workbook():
 
     client = gspread.authorize(creds)
 
-    return client.open(WORKBOOK_NAME)
+    return client.open_by_key(SPREADSHEET_ID)
 
-@st.cache_data(ttl=3600, show_spinner=False)
+@st.cache_data(show_spinner=False)
 def load_questions() -> pd.DataFrame:
     workbook = get_workbook()
     sheet = workbook.worksheet(QUESTIONS_SHEET)
