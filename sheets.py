@@ -11,30 +11,30 @@ from helpers import normalize_text, answer_key
 
 @st.cache_resource(show_spinner=False)
 def get_workbook():
-    st.write(service_account_info.keys())
-    credentials_path = Path("credentials.json")
+
     service_account_info = None
+
     try:
-        service_account_info = st.secrets.get("gcp_service_account")
+        service_account_info = st.secrets["gcp_service_account"]
     except Exception:
         service_account_info = None
 
     if service_account_info:
-        creds = Credentials.from_service_account_info(
-        service_account_info,
-        scopes=SCOPE
-    )
 
-    elif credentials_path.exists():
-        creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", SCOPE)
+        creds = Credentials.from_service_account_info(
+            dict(service_account_info),
+            scopes=SCOPE
+        )
+
     else:
+
         st.error(
-            "Google credentials not found. Add credentials.json beside this app "
-            "or configure st.secrets['gcp_service_account']."
+            "Google credentials not found in Streamlit Secrets."
         )
         st.stop()
 
     client = gspread.authorize(creds)
+
     return client.open(WORKBOOK_NAME)
 
 
