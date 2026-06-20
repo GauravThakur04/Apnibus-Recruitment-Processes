@@ -11,6 +11,7 @@ from helpers import normalize_text, answer_key
 
 @st.cache_resource(show_spinner=False)
 def get_workbook():
+    st.write(service_account_info.keys())
     credentials_path = Path("credentials.json")
     service_account_info = None
     try:
@@ -20,7 +21,7 @@ def get_workbook():
 
     if service_account_info:
         creds = Credentials.from_service_account_info(
-        dict(service_account_info),
+        service_account_info,
         scopes=SCOPE
     )
 
