@@ -85,7 +85,7 @@ def initialize_state() -> None:
 
 def sync_answers() -> None:
     if "answers" not in st.session_state:
-        st.session_state.answers = {}
+        st.session_state["answers"] = {}
     if "selected_questions" in st.session_state and st.session_state.selected_questions is not None:
         sections = get_sections(st.session_state.selected_questions)
         if sections and "current_section" in st.session_state:
@@ -99,7 +99,7 @@ def sync_answers() -> None:
                     q_id = normalize_text(question.get("Q_ID", ""))
                     key = answer_key(q_id)
                     if key in st.session_state:
-                        st.session_state.answers[q_id] = st.session_state[key]
+                        st.session_state["answers"][q_id] = st.session_state[key]
 
 
 def get_question_options(question: pd.Series) -> list[str]:

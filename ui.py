@@ -231,7 +231,7 @@ def render_start_screen(questions: pd.DataFrame) -> None:
         st.session_state.submitted = False
         st.session_state.current_section = 0
         st.session_state.start_time = pd.Timestamp.now()
-        st.session_state.answers = {}
+        st.session_state["answers"] = {}
         for key in list(st.session_state.keys()):
             if key.startswith("answer_"):
                 del st.session_state[key]
