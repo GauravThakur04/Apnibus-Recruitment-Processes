@@ -16,22 +16,33 @@ def score_assessment(test_questions: pd.DataFrame) -> tuple[int, int, float, str
             continue
 
         correct_answers = [x.strip() for x in correct.split("OR")]
+
         points = int(question["Points"])
         max_score += points
-        selected = st.session_state.get(answer_key(question["Q_ID"]), "")
+
+        selected = normalize_text(
+            st.session_state.get(answer_key(question["Q_ID"]), "")
+        )
+
         suffix = get_lang_config()["option_suffix"]
+
         is_correct = False
 
         for answer_code in correct_answers:
-            option_local = normalize_text(
-        question.get(f"Option_{answer_code}{suffix}", "")
-    )
 
-    if normalize_text(selected) == option_local:
-        is_correct = True
-       
+            option_local = normalize_text(
+                question.get(f"Option_{answer_code}{suffix}", "")
+            )
+
+            if selected == option_local:
+                is_correct = True
+                break
+
+        if is_correct:
+            score += points
 
     percentage = round((score / max_score) * 100, 2) if max_score else 0.0
+
     if percentage >= PASS_TO_INTERVIEW:
         status = "Interview"
     elif percentage >= PASS_TO_SCREENING:
