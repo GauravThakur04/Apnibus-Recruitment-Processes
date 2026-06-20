@@ -8,7 +8,6 @@ from google.oauth2.service_account import Credentials
 from config import *
 from helpers import normalize_text, answer_key
 
-
 @st.cache_resource(show_spinner=False)
 def get_workbook():
 
@@ -20,6 +19,9 @@ def get_workbook():
         service_account_info = None
 
     if service_account_info:
+
+        st.write("Secret Found")
+        st.write(service_account_info.keys())
 
         creds = Credentials.from_service_account_info(
             dict(service_account_info),
@@ -36,7 +38,6 @@ def get_workbook():
     client = gspread.authorize(creds)
 
     return client.open(WORKBOOK_NAME)
-
 
 @st.cache_data(ttl=3600, show_spinner=False)
 def load_questions() -> pd.DataFrame:
