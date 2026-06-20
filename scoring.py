@@ -12,17 +12,18 @@ def score_assessment(test_questions: pd.DataFrame) -> tuple[int, int, int, int, 
     attempted = 0
     correct_count = 0
 
+    # Build an answer cache from session state so Q_ID lookups are consistent.
+    answer_map: dict[str, str] = {}
+    for raw_q_id in test_questions["Q_ID"]:
+        q_id = normalize_text(raw_q_id)
+        key = answer_key(q_id)
+        answer_map[q_id] = normalize_text(st.session_state.get(key, ""))
+
     for _, question in test_questions.iterrows():
+        q_id = normalize_text(question.get("Q_ID", ""))
         correct = normalize_text(question["Correct"]).upper()
 
-        # Normalize question id so it matches the key used in the UI
-        q_id = normalize_text(question.get("Q_ID", ""))
-
-        # Open and rating questions are not auto-scored here but count as attempted
-        selected = normalize_text(
-            st.session_state.get(answer_key(q_id), "")
-        )
-
+        selected = answer_map.get(q_id, "")
         if selected:
             attempted += 1
 
