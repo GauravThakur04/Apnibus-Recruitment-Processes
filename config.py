@@ -11,7 +11,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 APP_TITLE = "ApniBus POS Sales Executive Assessment"
 WORKBOOK_NAME = "ApniBus Recruitment"
-QUESTIONS_SHEET = "Questions"
+QUESTIONS_SHEET = "Assessment_Questions"
 RESULTS_SHEET = "Results"
 QUESTIONS_PER_SECTION = 5
 EXAM_DURATION_MINUTES = 60
@@ -59,6 +59,7 @@ LANGUAGES = {
         "label": "English",
         "question_col": "Question_EN",
         "option_suffix": "_EN",
+         "dir": "ltr",
     },
     "हिंदी": {
         "code": "HI",
