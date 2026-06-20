@@ -261,6 +261,19 @@ def render_start_screen(questions: pd.DataFrame) -> None:
 
 
 def render_assessment() -> None:
+    # Scroll to top of the page on section transitions
+    js = """
+    <script>
+        var body = window.parent.document.querySelector(".main");
+        if (body) {
+            body.scrollTop = 0;
+        }
+        window.parent.scrollTo(0, 0);
+        window.scrollTo(0, 0);
+    </script>
+    """
+    components.html(js, height=0)
+
     test_questions = st.session_state.selected_questions
     sections = get_sections(test_questions)
 
