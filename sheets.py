@@ -154,7 +154,9 @@ def save_candidate_answers(test_questions: pd.DataFrame) -> None:
     rows = []
 
     for _, question in test_questions.iterrows():
-        answer = st.session_state.get(answer_key(question["Q_ID"]), "")
+        # Use normalized Q_ID to match the UI key
+        q_id = normalize_text(question.get("Q_ID", ""))
+        answer = st.session_state.get(answer_key(q_id), "")
         correct = str(question["Correct"]).strip()
 
         if "OPEN" in correct.upper():

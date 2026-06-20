@@ -15,9 +15,12 @@ def score_assessment(test_questions: pd.DataFrame) -> tuple[int, int, int, int, 
     for _, question in test_questions.iterrows():
         correct = normalize_text(question["Correct"]).upper()
 
+        # Normalize question id so it matches the key used in the UI
+        q_id = normalize_text(question.get("Q_ID", ""))
+
         # Open and rating questions are not auto-scored here but count as attempted
         selected = normalize_text(
-            st.session_state.get(answer_key(question["Q_ID"]), "")
+            st.session_state.get(answer_key(q_id), "")
         )
 
         if selected:
