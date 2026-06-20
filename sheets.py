@@ -3,7 +3,7 @@ from pathlib import Path
 import gspread
 import pandas as pd
 import streamlit as st
-from oauth2client.service_account import ServiceAccountCredentials
+from google.oauth2.service_account import Credentials
 
 from config import *
 from helpers import normalize_text, answer_key
@@ -19,9 +19,11 @@ def get_workbook():
         service_account_info = None
 
     if service_account_info:
-        creds = ServiceAccountCredentials.from_json_keyfile_dict(
-            dict(service_account_info), SCOPE
-        )
+        creds = Credentials.from_service_account_info(
+        dict(service_account_info),
+        scopes=SCOPE
+    )
+
     elif credentials_path.exists():
         creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", SCOPE)
     else:
@@ -119,3 +121,4 @@ def save_candidate_answers(test_questions: pd.DataFrame) -> None:
 
     if rows:
         response_sheet.append_rows(rows)
+
