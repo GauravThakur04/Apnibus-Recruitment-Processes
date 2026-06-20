@@ -13,11 +13,16 @@ def normalize_text(value) -> str:
 
 
 def is_valid_mobile(mobile: str) -> bool:
-    return bool(re.fullmatch(r"[6-9]\d{9}", mobile.strip()))
+    cleaned = re.sub(r"\D", "", mobile.strip())
+    if cleaned.startswith("91") and len(cleaned) == 12:
+        cleaned = cleaned[2:]
+    elif cleaned.startswith("0") and len(cleaned) == 11:
+        cleaned = cleaned[1:]
+    return len(cleaned) == 10 and cleaned[0] in "6789"
 
 
 def is_valid_email(email: str) -> bool:
-    return bool(re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", email.strip()))
+    return bool(re.match(r"^[^@]+@[^@]+\.[^@]+$", email.strip().lower()))
 
 
 def answer_key(q_id: str) -> str:

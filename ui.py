@@ -179,7 +179,7 @@ def render_start_screen(questions: pd.DataFrame) -> None:
 
     with col1:
         name = st.text_input(t("name"), placeholder="Enter your full name")
-        mobile = st.text_input(t("mobile"), placeholder="10 digit mobile number", max_chars=10)
+        mobile = st.text_input(t("mobile"), placeholder="10 digit mobile number", max_chars=15)
         city = st.text_input(t("city"), placeholder="Enter your city")
         current_occupation = st.text_input(t("occupation"), placeholder="e.g. Student, Sales Executive")
         field_sales_comfort = st.selectbox(t("field_comfort"), [t("yes"), t("no")])
@@ -218,7 +218,13 @@ def render_start_screen(questions: pd.DataFrame) -> None:
 
     if st.button(t("start_btn"), type="primary", disabled=start_disabled, use_container_width=True):
         st.session_state.name = name
-        st.session_state.mobile = mobile
+        import re
+        cleaned_mobile = re.sub(r"\D", "", mobile.strip())
+        if cleaned_mobile.startswith("91") and len(cleaned_mobile) == 12:
+            cleaned_mobile = cleaned_mobile[2:]
+        elif cleaned_mobile.startswith("0") and len(cleaned_mobile) == 11:
+            cleaned_mobile = cleaned_mobile[1:]
+        st.session_state.mobile = cleaned_mobile
         st.session_state.email = email
         st.session_state.city = city
         st.session_state.state = state
