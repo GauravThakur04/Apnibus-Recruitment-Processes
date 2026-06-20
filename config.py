@@ -11,12 +11,13 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 APP_TITLE = "ApniBus POS Sales Executive Assessment"
 WORKBOOK_NAME = "ApniBus Recruitment"
-QUESTIONS_SHEET = "Assessment_Questions"
+QUESTIONS_SHEET = "Questions"
 RESULTS_SHEET = "Results"
 QUESTIONS_PER_SECTION = 5
 EXAM_DURATION_MINUTES = 60
-PASS_TO_INTERVIEW = 50
-PASS_TO_SCREENING = 50
+# Reduced pass thresholds as requested
+PASS_TO_INTERVIEW = 20
+PASS_TO_SCREENING = 20
 
 SCOPE = [
     "https://spreadsheets.google.com/feeds",

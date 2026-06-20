@@ -120,9 +120,10 @@ def candidate_already_exists(email: str, mobile: str) -> bool:
 
     return False
 
-def submit_results(score: int, percentage: float, status: str, time_taken: float) -> None:
+def submit_results(score: int, max_score: int, attempted: int, correct_count: int, percentage: float, status: str, time_taken: float) -> None:
     workbook = get_workbook()
     results_sheet = workbook.worksheet(RESULTS_SHEET)
+    # Append with additional fields: max_score, attempted, correct_count
     results_sheet.append_row([
         pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S"),
         st.session_state.name,
@@ -137,6 +138,9 @@ def submit_results(score: int, percentage: float, status: str, time_taken: float
         st.session_state.cv_filename,
         st.session_state.get("language", "English"),
         score,
+        max_score,
+        attempted,
+        correct_count,
         percentage,
         status,
         time_taken,
