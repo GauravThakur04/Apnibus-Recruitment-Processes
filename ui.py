@@ -234,7 +234,10 @@ def render_start_screen(questions: pd.DataFrame) -> None:
         st.session_state["answers"] = {}
         for key in list(st.session_state.keys()):
             if key.startswith("answer_"):
-                del st.session_state[key]
+                try:
+                    del st.session_state[key]
+                except Exception:
+                    pass
         st.rerun()
 
 
