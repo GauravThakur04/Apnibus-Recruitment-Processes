@@ -2,7 +2,7 @@ import streamlit as st
 
 from config import APP_TITLE
 from sheets import load_questions
-from helpers import initialize_state
+from helpers import initialize_state, sync_answers
 from scoring import finalize_submission
 from ui import render_start_screen, render_assessment, render_result
 from styles import load_styles
@@ -17,6 +17,7 @@ load_styles()
 
 def main() -> None:
     initialize_state()
+    sync_answers()
     questions = load_questions()
 
     if st.session_state.submitted:

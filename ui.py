@@ -38,15 +38,22 @@ def render_question(question: pd.Series, question_number: int) -> None:
     )
 
     key = answer_key(q_id)
+    saved_answers = st.session_state.get("answers", {})
+    val = saved_answers.get(q_id, None)
 
     if "open" in correct_type:
-        st.text_area(t("your_answer"), key=key, height=110, placeholder="")
+        text_val = str(val) if val is not None else ""
+        st.text_area(t("your_answer"), value=text_val, key=key, height=110, placeholder="")
     elif "rating" in correct_type:
-        st.slider(t("rate_yourself"), min_value=1, max_value=5, value=3, key=key)
+        rating_val = int(val) if val is not None else 3
+        st.slider(t("rate_yourself"), min_value=1, max_value=5, value=rating_val, key=key)
     else:
         options = get_question_options(question)
         if options:
-            st.radio(t("select_answer"), options, index=None, key=key)
+            idx = None
+            if val is not None and val in options:
+                idx = options.index(val)
+            st.radio(t("select_answer"), options, index=idx, key=key)
         else:
             st.warning("No answer options configured for this question.")
 
@@ -224,6 +231,10 @@ def render_start_screen(questions: pd.DataFrame) -> None:
         st.session_state.submitted = False
         st.session_state.current_section = 0
         st.session_state.start_time = pd.Timestamp.now()
+        st.session_state.answers = {}
+        for key in list(st.session_state.keys()):
+            if key.startswith("answer_"):
+                del st.session_state[key]
         st.rerun()
 
 

@@ -157,7 +157,8 @@ def save_candidate_answers(test_questions: pd.DataFrame) -> None:
     for _, question in test_questions.iterrows():
         # Use normalized Q_ID to match the UI key
         q_id = normalize_text(question.get("Q_ID", ""))
-        answer = st.session_state.get(answer_key(q_id), "")
+        answers_dict = st.session_state.get("answers", {})
+        answer = answers_dict.get(q_id, "")
         correct = str(question["Correct"]).strip()
 
         if "OPEN" in correct.upper():
@@ -173,7 +174,7 @@ def save_candidate_answers(test_questions: pd.DataFrame) -> None:
         if q_type == "MCQ":
             suffix = get_lang_config()["option_suffix"]
             for letter in ["A", "B", "C", "D"]:
-                opt = normalize_text(question.get(f"Option_{letter}{suffix}", ""))
+                opt = normalize_text(question.get(f"Option_{letter}{suffix}", "")) or normalize_text(question.get(f"Option_{letter}", ""))
                 if opt and normalize_text(str(answer)) == opt:
                     answer_code = letter
                     break

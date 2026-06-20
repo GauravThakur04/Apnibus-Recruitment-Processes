@@ -12,12 +12,12 @@ def score_assessment(test_questions: pd.DataFrame) -> tuple[int, int, int, int, 
     attempted = 0
     correct_count = 0
 
-    # Build an answer cache from session state so Q_ID lookups are consistent.
+    # Build an answer cache from persistent session state answers dict so Q_ID lookups are consistent.
     answer_map: dict[str, str] = {}
+    answers_dict = st.session_state.get("answers", {})
     for raw_q_id in test_questions["Q_ID"]:
         q_id = normalize_text(raw_q_id)
-        key = answer_key(q_id)
-        answer_map[q_id] = normalize_text(st.session_state.get(key, ""))
+        answer_map[q_id] = normalize_text(answers_dict.get(q_id, ""))
 
     for _, question in test_questions.iterrows():
         q_id = normalize_text(question.get("Q_ID", ""))
@@ -47,7 +47,7 @@ def score_assessment(test_questions: pd.DataFrame) -> tuple[int, int, int, int, 
         for answer_code in correct_answers:
             option_local = normalize_text(
                 question.get(f"Option_{answer_code}{suffix}", "")
-            )
+            ) or normalize_text(question.get(f"Option_{answer_code}", ""))
 
             if selected == option_local and selected != "":
                 is_correct = True
@@ -79,9 +79,10 @@ def finalize_submission(test_questions: pd.DataFrame, auto_submitted: bool = Fal
 
     # Build a compact responses summary: QID=answer (safely normalized)
     responses_list = []
+    answers_dict = st.session_state.get("answers", {})
     for _, question in test_questions.iterrows():
         q_id = normalize_text(question.get("Q_ID", ""))
-        ans = st.session_state.get(answer_key(q_id), "")
+        ans = answers_dict.get(q_id, "")
         responses_list.append(f"{q_id}={str(ans)}")
     responses_str = "||".join(responses_list)
 

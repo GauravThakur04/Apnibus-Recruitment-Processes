@@ -76,10 +76,30 @@ def initialize_state() -> None:
         "salary_comfort": "",
         "cv_filename": "",
         "cv_link": "",
+        "answers": {},
     }
     for key, value in defaults.items():
         if key not in st.session_state:
             st.session_state[key] = value
+
+
+def sync_answers() -> None:
+    if "answers" not in st.session_state:
+        st.session_state.answers = {}
+    if "selected_questions" in st.session_state and st.session_state.selected_questions is not None:
+        sections = get_sections(st.session_state.selected_questions)
+        if sections and "current_section" in st.session_state:
+            curr_sec_idx = st.session_state.current_section
+            if 0 <= curr_sec_idx < len(sections):
+                current_section = sections[curr_sec_idx]
+                section_questions = st.session_state.selected_questions[
+                    st.session_state.selected_questions["Section"] == current_section
+                ]
+                for _, question in section_questions.iterrows():
+                    q_id = normalize_text(question.get("Q_ID", ""))
+                    key = answer_key(q_id)
+                    if key in st.session_state:
+                        st.session_state.answers[q_id] = st.session_state[key]
 
 
 def get_question_options(question: pd.Series) -> list[str]:
