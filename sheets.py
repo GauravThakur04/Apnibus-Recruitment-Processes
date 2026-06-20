@@ -167,6 +167,17 @@ def save_candidate_answers(test_questions: pd.DataFrame) -> None:
         else:
             q_type = "MCQ"
 
+        # For MCQ, also determine which option letter (A/B/C/D) was chosen
+        answer_code = ""
+        answer_text = str(answer)
+        if q_type == "MCQ":
+            suffix = get_lang_config()["option_suffix"]
+            for letter in ["A", "B", "C", "D"]:
+                opt = normalize_text(question.get(f"Option_{letter}{suffix}", ""))
+                if opt and normalize_text(str(answer)) == opt:
+                    answer_code = letter
+                    break
+
         rows.append([
             timestamp,
             st.session_state.mobile,
@@ -177,7 +188,8 @@ def save_candidate_answers(test_questions: pd.DataFrame) -> None:
             question["Q_ID"],
             question["Section"],
             question["Question_EN"],
-            str(answer),
+            answer_code,
+            answer_text,
         ])
 
     if rows:
