@@ -62,7 +62,33 @@ def load_questions() -> pd.DataFrame:
         st.stop()
 
     return data
+def candidate_already_exists(email: str, mobile: str) -> bool:
 
+    workbook = get_workbook()
+    sheet = workbook.worksheet(RESULTS_SHEET)
+
+    records = sheet.get_all_records()
+
+    email = email.strip().lower()
+    mobile = mobile.strip()
+
+    for row in records:
+
+        existing_email = str(
+            row.get("Email ID", row.get("Email", ""))
+        ).strip().lower()
+
+        existing_mobile = str(
+            row.get("Mobile Number", row.get("Mobile", ""))
+        ).strip()
+
+        if existing_email == email:
+            return True
+
+        if existing_mobile == mobile:
+            return True
+
+    return False
 
 def submit_results(score: int, percentage: float, status: str, time_taken: float) -> None:
     workbook = get_workbook()

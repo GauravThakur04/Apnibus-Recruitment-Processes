@@ -191,7 +191,7 @@ def load_styles() -> None:
                 margin-top: 2px;
             }
 
-            /* Select/Dropdown styling */
+            /* Select/Dropdown styling (closed selectbox) */
             [data-baseweb="select"] {
                 color: #FFFFFF !important;
             }
@@ -205,34 +205,45 @@ def load_styles() -> None:
                 font-weight: 700 !important;
                 font-size: 0.95rem !important;
             }
-            [data-baseweb="popover"] > div {
+
+            /* Dropdown menu (open state) — make options clearly readable */
+            div[data-baseweb="popover"],
+            div[data-baseweb="popover"] > div,
+            div[data-baseweb="menu"],
+            ul[role="listbox"] {
                 background-color: #F0F7FF !important;
             }
-            [data-baseweb="menu"] {
-                background-color: #F0F7FF !important;
+            div[data-baseweb="menu"],
+            ul[role="listbox"] {
                 border: 2px solid #1E5BA8 !important;
+                border-radius: 6px !important;
             }
-            [data-baseweb="menu"] li {
+            li[role="option"],
+            div[data-baseweb="menu"] li {
                 background-color: #F0F7FF !important;
             }
-            [data-baseweb="menu"] li div {
-                background-color: #F0F7FF !important;
-                color: #0D3B82 !important;
-            }
-            [data-baseweb="menu"] li span {
+            li[role="option"], li[role="option"] *,
+            div[data-baseweb="menu"] li, div[data-baseweb="menu"] li * {
                 color: #0D3B82 !important;
                 font-weight: 600 !important;
                 font-size: 0.98rem !important;
             }
-            [data-baseweb="menu"] li[aria-selected="true"] {
+            li[role="option"]:hover,
+            div[data-baseweb="menu"] li:hover {
+                background-color: #B3D9FF !important;
+            }
+            li[role="option"]:hover, li[role="option"]:hover *,
+            div[data-baseweb="menu"] li:hover, div[data-baseweb="menu"] li:hover * {
+                color: #0D3B82 !important;
+            }
+            li[role="option"][aria-selected="true"],
+            div[data-baseweb="menu"] li[aria-selected="true"] {
                 background-color: #1E5BA8 !important;
             }
-            [data-baseweb="menu"] li[aria-selected="true"] span {
+            li[role="option"][aria-selected="true"], li[role="option"][aria-selected="true"] *,
+            div[data-baseweb="menu"] li[aria-selected="true"], div[data-baseweb="menu"] li[aria-selected="true"] * {
                 color: #FFFFFF !important;
                 font-weight: 800 !important;
-            }
-            [data-baseweb="menu"] li:hover {
-                background-color: #B3D9FF !important;
             }
 
             /* Misc */
