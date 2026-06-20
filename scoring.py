@@ -76,8 +76,16 @@ def finalize_submission(test_questions: pd.DataFrame, auto_submitted: bool = Fal
     end_time = pd.Timestamp.now()
     time_taken = round((end_time - st.session_state.start_time).total_seconds() / 60, 2)
 
+    # Build a compact responses summary: QID=answer (safely normalized)
+    responses_list = []
+    for _, question in test_questions.iterrows():
+        q_id = normalize_text(question.get("Q_ID", ""))
+        ans = st.session_state.get(answer_key(q_id), "")
+        responses_list.append(f"{q_id}={str(ans)}")
+    responses_str = "||".join(responses_list)
+
     try:
-        submit_results(score, max_score, attempted, correct_count, percentage, status, time_taken)
+        submit_results(score, max_score, attempted, correct_count, percentage, status, time_taken, responses_str)
         save_candidate_answers(test_questions)
     except Exception as exc:
         st.error(f"Could not submit results: {exc}")

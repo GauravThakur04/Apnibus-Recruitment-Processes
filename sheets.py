@@ -120,7 +120,7 @@ def candidate_already_exists(email: str, mobile: str) -> bool:
 
     return False
 
-def submit_results(score: int, max_score: int, attempted: int, correct_count: int, percentage: float, status: str, time_taken: float) -> None:
+def submit_results(score: int, max_score: int, attempted: int, correct_count: int, percentage: float, status: str, time_taken: float, responses: str = "") -> None:
     workbook = get_workbook()
     results_sheet = workbook.worksheet(RESULTS_SHEET)
     # Append with additional fields: max_score, attempted, correct_count
@@ -144,6 +144,7 @@ def submit_results(score: int, max_score: int, attempted: int, correct_count: in
         percentage,
         status,
         time_taken,
+        responses,
     ])
 
 
