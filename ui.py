@@ -205,46 +205,59 @@ def render_start_screen(questions: pd.DataFrame) -> None:
     if email and not is_valid_email(email):
         st.warning(t("email_warning"))
 
-    start_disabled = (
-        not name
-        or not is_valid_mobile(mobile)
-        or not is_valid_email(email)
-        or not city
-        or not state
-        or not current_occupation
-    )
-
     st.divider()
 
-    if st.button(t("start_btn"), type="primary", disabled=start_disabled, use_container_width=True):
-        st.session_state.name = name
-        import re
-        cleaned_mobile = re.sub(r"\D", "", mobile.strip())
-        if cleaned_mobile.startswith("91") and len(cleaned_mobile) == 12:
-            cleaned_mobile = cleaned_mobile[2:]
-        elif cleaned_mobile.startswith("0") and len(cleaned_mobile) == 11:
-            cleaned_mobile = cleaned_mobile[1:]
-        st.session_state.mobile = cleaned_mobile
-        st.session_state.email = email
-        st.session_state.city = city
-        st.session_state.state = state
-        st.session_state.current_occupation = current_occupation
-        st.session_state.years_experience = years_experience
-        st.session_state.field_sales_comfort = field_sales_comfort
-        st.session_state.salary_comfort = salary_comfort
-        st.session_state.selected_questions = choose_questions(questions)
-        st.session_state.started = True
-        st.session_state.submitted = False
-        st.session_state.current_section = 0
-        st.session_state.start_time = pd.Timestamp.now()
-        st.session_state["answers"] = {}
-        for key in list(st.session_state.keys()):
-            if key.startswith("answer_"):
-                try:
-                    del st.session_state[key]
-                except Exception:
-                    pass
-        st.rerun()
+    if st.button(t("start_btn"), type="primary", use_container_width=True):
+        errors = []
+        if not name:
+            errors.append("Please enter your Full Name.")
+        if not mobile:
+            errors.append("Please enter your Mobile Number.")
+        elif not is_valid_mobile(mobile):
+            errors.append(t("mobile_warning"))
+        if not email:
+            errors.append("Please enter your Email ID.")
+        elif not is_valid_email(email):
+            errors.append(t("email_warning"))
+        if not city:
+            errors.append("Please enter your City.")
+        if not state:
+            errors.append("Please enter your State.")
+        if not current_occupation:
+            errors.append("Please enter your Current Occupation.")
+
+        if errors:
+            for err in errors:
+                st.error(err)
+        else:
+            st.session_state.name = name
+            import re
+            cleaned_mobile = re.sub(r"\D", "", mobile.strip())
+            if cleaned_mobile.startswith("91") and len(cleaned_mobile) == 12:
+                cleaned_mobile = cleaned_mobile[2:]
+            elif cleaned_mobile.startswith("0") and len(cleaned_mobile) == 11:
+                cleaned_mobile = cleaned_mobile[1:]
+            st.session_state.mobile = cleaned_mobile
+            st.session_state.email = email
+            st.session_state.city = city
+            st.session_state.state = state
+            st.session_state.current_occupation = current_occupation
+            st.session_state.years_experience = years_experience
+            st.session_state.field_sales_comfort = field_sales_comfort
+            st.session_state.salary_comfort = salary_comfort
+            st.session_state.selected_questions = choose_questions(questions)
+            st.session_state.started = True
+            st.session_state.submitted = False
+            st.session_state.current_section = 0
+            st.session_state.start_time = pd.Timestamp.now()
+            st.session_state["answers"] = {}
+            for key in list(st.session_state.keys()):
+                if key.startswith("answer_"):
+                    try:
+                        del st.session_state[key]
+                    except Exception:
+                        pass
+            st.rerun()
 
 
 def render_assessment() -> None:
