@@ -193,46 +193,46 @@ def load_styles() -> None:
 
             /* Select/Dropdown styling */
             [data-baseweb="select"] {
-                color: #121212 !important;
+                color: #FFFFFF !important;
             }
             [data-baseweb="select"] > div {
-                background-color: #FFFFFF !important;
-                border: 2px solid #1E5BA8 !important;
+                background-color: #1E5BA8 !important;
+                border: 2px solid #0D3B82 !important;
                 border-radius: 6px !important;
             }
             [data-baseweb="select"] span {
-                color: #121212 !important;
-                font-weight: 600 !important;
+                color: #FFFFFF !important;
+                font-weight: 700 !important;
                 font-size: 0.95rem !important;
             }
             [data-baseweb="popover"] > div {
-                background-color: #FFFFFF !important;
+                background-color: #F0F7FF !important;
             }
             [data-baseweb="menu"] {
-                background-color: #FFFFFF !important;
-                border: 1px solid #D1D5DB !important;
+                background-color: #F0F7FF !important;
+                border: 2px solid #1E5BA8 !important;
             }
             [data-baseweb="menu"] li {
-                background-color: #FFFFFF !important;
+                background-color: #F0F7FF !important;
             }
             [data-baseweb="menu"] li div {
-                background-color: #FFFFFF !important;
-                color: #121212 !important;
+                background-color: #F0F7FF !important;
+                color: #0D3B82 !important;
             }
             [data-baseweb="menu"] li span {
-                color: #121212 !important;
-                font-weight: 500 !important;
-                font-size: 0.95rem !important;
+                color: #0D3B82 !important;
+                font-weight: 600 !important;
+                font-size: 0.98rem !important;
             }
             [data-baseweb="menu"] li[aria-selected="true"] {
-                background-color: #E3F2FD !important;
+                background-color: #1E5BA8 !important;
             }
             [data-baseweb="menu"] li[aria-selected="true"] span {
-                color: #1E5BA8 !important;
-                font-weight: 700 !important;
+                color: #FFFFFF !important;
+                font-weight: 800 !important;
             }
             [data-baseweb="menu"] li:hover {
-                background-color: #F5F5F5 !important;
+                background-color: #B3D9FF !important;
             }
 
             /* Misc */
